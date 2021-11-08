@@ -1,0 +1,36 @@
+version: '3'
+services:
+  api:
+    depends_on:
+      - db
+    build:
+      args:
+        user: sammy
+        uid: 1000
+      context: ./my_project
+      dockerfile: Dockerfile
+    command: bash -c 'php -S 0.0.0.0:8000 -t public'
+    ports:
+      - "8000:8000"
+    networks:
+      - eco4marseille
+
+  db:
+    image: mysql:5.7
+    env_file: ./.env
+    environment:
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    ports:
+      - 3306:3306
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      - eco4marseille
+volumes:
+  my-db:
+networks:
+  eco4marseille:
+    driver: bridge
