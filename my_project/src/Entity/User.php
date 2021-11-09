@@ -30,15 +30,9 @@ class User
      */
     private $password;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Parrainage::class, mappedBy="user")
-     */
-    private $parrainages;
-
     public function __construct()
     {
-        $this->user_id = new ArrayCollection();
-        $this->parrainages = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -69,35 +63,4 @@ class User
 
         return $this;
     }
-
-    /**
-     * @return Collection|Parrainage[]
-     */
-    public function getParrainages(): Collection
-    {
-        return $this->parrainages;
-    }
-
-    public function addParrainage(Parrainage $parrainage): self
-    {
-        if (!$this->parrainages->contains($parrainage)) {
-            $this->parrainages[] = $parrainage;
-            $parrainage->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParrainage(Parrainage $parrainage): self
-    {
-        if ($this->parrainages->removeElement($parrainage)) {
-            // set the owning side to null (unless already changed)
-            if ($parrainage->getUser() === $this) {
-                $parrainage->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

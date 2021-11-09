@@ -20,11 +20,6 @@ class Club
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Parrainage::class, mappedBy="club")
-     */
-    private $parrainages;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -43,36 +38,6 @@ class Club
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection|Parrainage[]
-     */
-    public function getParrainages(): Collection
-    {
-        return $this->parrainages;
-    }
-
-    public function addParrainage(Parrainage $parrainage): self
-    {
-        if (!$this->parrainages->contains($parrainage)) {
-            $this->parrainages[] = $parrainage;
-            $parrainage->setClub($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParrainage(Parrainage $parrainage): self
-    {
-        if ($this->parrainages->removeElement($parrainage)) {
-            // set the owning side to null (unless already changed)
-            if ($parrainage->getClub() === $this) {
-                $parrainage->setClub(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getName(): ?string

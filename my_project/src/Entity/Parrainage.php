@@ -18,12 +18,12 @@ class Parrainage
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="parrainages")
+     * @ORM\OneToOne(targetEntity=Club::class, cascade={"persist", "remove"})
      */
     private $club;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="parrainages")
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      */
     private $user;
 
