@@ -55,7 +55,6 @@ class UserController extends AbstractController
         $user = $this->getDoctrine()->getRepository(User::class)->findOneByEmail($user_data['emailLogin']);
 
         if ($user->getPassword() == $user_data['passwordLogin']) {
-
             return $this->json({token: $user->getEmail()});
         }
 
