@@ -42,6 +42,7 @@ class ClubController extends AbstractController
         $entityManager->flush();
         
         return $this->json('Success');
+        
 
     }
     
