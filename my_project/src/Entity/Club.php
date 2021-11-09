@@ -34,10 +34,14 @@ class Club
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection();
-        $this->parrainages = new ArrayCollection();
+        $this->user_id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,6 +81,18 @@ class Club
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

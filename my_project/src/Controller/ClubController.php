@@ -30,20 +30,19 @@ class ClubController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $user_data = json_decode($request->getContent());
+        $userdata = json_decode($request->getContent(), true);
         $club = new Club();
         $club->setName($userdata["nomDuClub"]);
         $club->setRepresentant($userdata["nomDuRepresentant"]);
         $club->setEmail($userdata["emailClub"]);
-        $club->setmotDePasse($user_data["motDePasseClub"]);
-        
+        $club->setPassword($userdata["motDePasseClub"]);
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($club);
         $entityManager->flush();
         
         return $this->json('Success');
         
-
     }
     
     /**
