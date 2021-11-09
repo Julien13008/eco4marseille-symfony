@@ -40,8 +40,6 @@ class UserController extends AbstractController
             return $this->json('');
         }
 
-
-
         return $this->json("Les deux mots de passe sont différent");
     }
 
