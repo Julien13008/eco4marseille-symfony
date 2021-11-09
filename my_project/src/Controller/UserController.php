@@ -32,15 +32,17 @@ class UserController extends AbstractController
         $user = new User();
         $user->setEmail($user_data['emailParticulier']);
         $user->setPassword($user_data['passParticulier']);
+        $user->setWallet(0);
+        $user->setWalletDonation(0);
 
         if ($user_data['passParticulier'] == $user_data['confirmePassParticulier']) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->json('');
+            return $this->json('Success');
         }
 
-        return $this->json("Les deux mots de passe sont différent");
+        return $this->json("Email ou mot de passe différent");
     }
 
     /**
