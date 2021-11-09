@@ -46,6 +46,23 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/login", name="login_user")
+     */
+    public function login(Request $request){
+
+        $user_data = json_decode($request->getContent(), true);
+
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneByEmail($user_data['emailParticulier']);
+
+        if ($user->getPassword() == $user_data['passParticulier']) {
+            return $this->json($user);
+        }
+
+        return $this->json('Email ou mot de passe incorrect');
+
+    }
+
+    /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
     public function show(User $user): Response
