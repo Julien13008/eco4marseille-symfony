@@ -52,13 +52,14 @@ class UserController extends AbstractController
 
         $user_data = json_decode($request->getContent(), true);
 
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneByEmail($user_data['emailParticulier']);
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneByEmail($user_data['emailLogin']);
 
-        if ($user->getPassword() == $user_data['passParticulier']) {
-            return $this->json($user);
+        if ($user->getPassword() == $user_data['passwordLogin']) {
+
+            return $this->json({token: $user->getEmail()});
         }
 
-        return $this->json('Email ou mot de passe incorrect');
+        return $this->json('Failure');
 
     }
 
