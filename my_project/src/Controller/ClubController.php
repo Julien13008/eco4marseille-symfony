@@ -23,31 +23,28 @@ class ClubController extends AbstractController
         return $this->render('club/index.html.twig', [
             'clubs' => $clubRepository->findAll(),
         ]);
-    }
+    } 
 
     /**
      * @Route("/new", name="club_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
+        $user_data = json_decode($request->getContent());
         $club = new Club();
-        $form = $this->createForm(ClubType::class, $club);
-        $form->handleRequest($request);
+        $club->setName($userdata["nomDuClub"]);
+        $club->setRepresentant($userdata["nomDuRepresentant"]);
+        $club->setEmail($userdata["emailClub"]);
+        $club->setmotDePasse($user_data["motDePasseClub"]);
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($club);
+        $entityManager->flush();
+        
+        return $this->json('Success');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($club);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('club_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('club/new.html.twig', [
-            'club' => $club,
-            'form' => $form,
-        ]);
     }
-
+    
     /**
      * @Route("/{id}", name="club_show", methods={"GET"})
      */
