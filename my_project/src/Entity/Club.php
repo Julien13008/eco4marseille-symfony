@@ -29,6 +29,11 @@ class Club
      */
     private $representant;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -60,6 +65,18 @@ class Club
     public function setRepresentant(string $representant): self
     {
         $this->representant = $representant;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }

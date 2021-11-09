@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\User1Type;
+use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,19 +28,19 @@ class UserController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $user_data =  json_decode($request->getContent(), true);
         $user = new User();
-        $form = $this->createForm(User1Type::class, $user);
-        $form->handleRequest($request);
+        $user->setEmail($user_data['emailParticulier']);
+        $user->setPassword($user_data['passParticulier']);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($user_data['passParticulier'] == $user_data['confirmePassParticulier']) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->json('Oui');
         }
 
-        return $this->json('');
+        return $this->json("Les deux mots de passe sont différent");
     }
 
     /**
@@ -48,9 +48,7 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
+        return $this->json($user);
     }
 
     /**
@@ -58,7 +56,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user): Response
     {
-        $form = $this->createForm(User1Type::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

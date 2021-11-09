@@ -21,7 +21,7 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $email;
 
@@ -30,9 +30,19 @@ class User
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $wallet;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $wallet_donation;
+
     public function __construct()
     {
-        
+        $this->user_id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -45,7 +55,7 @@ class User
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -60,6 +70,30 @@ class User
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getWallet(): ?float
+    {
+        return $this->wallet;
+    }
+
+    public function setWallet(float $wallet): self
+    {
+        $this->wallet = $wallet;
+
+        return $this;
+    }
+
+    public function getWalletDonation(): ?float
+    {
+        return $this->wallet_donation;
+    }
+
+    public function setWalletDonation(float $wallet_donation): self
+    {
+        $this->wallet_donation = $wallet_donation;
 
         return $this;
     }
