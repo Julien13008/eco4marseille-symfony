@@ -37,8 +37,10 @@ class UserController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->json('Oui');
+            return $this->json('');
         }
+
+
 
         return $this->json("Les deux mots de passe sont différent");
     }
